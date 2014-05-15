@@ -1,0 +1,10 @@
+
+<% if locationmatch -%>
+    <LocationMatch "<%= location %>">
+<% else -%>
+    <Location <%= location %>>
+<% end -%>
+<%  array_directives.each do |line| -%>
+        <%= line %>
+<% end -%>
+    </Location<% if locationmatch %>Match<% end %>>

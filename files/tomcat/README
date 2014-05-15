@@ -1,0 +1,1 @@
+Questi file servono alla sottoclasse 'tomcat' per far funzionare il mod_jk e far coesistere i servizi apache e tomcat.

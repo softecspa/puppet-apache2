@@ -1,0 +1,3 @@
+<Location ~ ".*\.war">
+        Deny from all
+</Location>

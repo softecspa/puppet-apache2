@@ -1,0 +1,20 @@
+# GENERATED WITH PUPPET using $HeadURL: https://svn.softecspa.it/sistemi/puppet/trunk/modules/apache2/files/apache2_logrotate $
+# $Id: apache2_logrotate 1824 2010-09-16 14:16:16Z mcapaccioli $
+
+/var/log/apache2/*.log {
+        daily
+        missingok
+        # Manteniamo 3 anni di log
+        rotate 1095
+        compress
+        delaycompress
+        notifempty
+        create 640 root adm
+        sharedscripts
+        postrotate
+                if [ -f "`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`" ]; then
+                        /etc/init.d/apache2 reload > /dev/null
+                fi
+        endscript
+}
+

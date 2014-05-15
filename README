@@ -1,0 +1,12 @@
+NOTE:
+
+Questo modulo richiede che sia definita la zona (variabile "$zone"), quindi il nodo dovra' ereditare 
+una delle zone definite nel file di configurazione principale (/etc/puppet/manifests/site.pp).
+
+Per utilizzare la sottoclasse "ispconfiglog", definire nel nodo (o in una sua superclasse) la variabile
+$apache2_isplogformat
+ricordandosi di utilizzare il carattere di escape ("\") per i backslash e per gli apici.
+
+Se si utilizza la sottoclasse apache2::drupal, e' necessario definire l'array '$memcachedaemons' per la corretta generazione del file 'php-sessions-memcache' tramite relativo template.
+
+E' possibile modificare il valore del num. max di file aperti dal processo sovrascrivendo la variabile $apache2_max_open_files.

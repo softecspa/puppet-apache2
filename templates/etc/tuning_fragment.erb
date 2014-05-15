@@ -1,0 +1,7 @@
+<% if @directory != '' -%><Directory <%= @directory %>><% end %>
+<% if @ifmodule != '' -%><IfModule <%= @ifmodule %>><% end %>
+<% @params.sort_by{|k,v| k}.each do |param, value| -%>
+<%= param %> <%= value %>
+<% end -%>
+<% if @ifmodule != '' -%></IfModule><% end %>
+<% if @directory != '' -%></Directory><% end %>

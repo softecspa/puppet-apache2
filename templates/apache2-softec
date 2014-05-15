@@ -1,0 +1,11 @@
+
+<% if has_variable?("www_port") then -%>
+NameVirtualHost *:<%= www_port %>
+<% else -%>
+NameVirtualHost *:80
+<% end -%>
+
+# Disattiva le informazioni relative al webserver
+ServerSignature Off
+ServerTokens Prod
+

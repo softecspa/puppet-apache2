@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Lorenzo Cocchi <lorenzo.cocchi@softecspa.it>
+
+xsleep="5"
+url="http://127.0.0.1/server-status?auto"
+getstatus="0"	# 0 = true | 1 = false
+apache2cmd="apache2"
+
+if ((${xsleep} < 5)); then
+    echo "Sleep can't less than 1 second!"
+    exit 1
+fi
+
+while true; do
+    clear
+    awk '{printf "%-20s %s %s %s\n",
+        "Load Average:", "|"$1"|", "|"$2"|", "|"$3"|"}' /proc/loadavg
+
+    awk '/^(Mem(Total|Free)|Cached|Swap)/ {printf "%-30s %10.2fM\n", $1, $2/1024}
+    END{print "\n"}' /proc/meminfo
+
+    if [ "${getstatus}" -eq "0" ]; then
+        wget -qO- ${url} | awk '
+        /^(Busy|Idle)Workers/ { printf "Apache %-23s %10d\n", $1, $2 }
+        END {print "\n"}'
+    fi
+
+    ps -o user,rss -C ${apache2cmd} | sed 1d | awk '
+        {if($1 != "root"){sum+=$2;count++}}
+        END{
+        printf "%-30s %10d\n%-30s %10.2fM\n%-30s %10.2fM\n",
+        "Total Apache Child Process:", count,
+        "Total Apache Child Memory:", sum/1024,
+        "Memory per Apache2 process:", sum/count/1024}'
+
+    sleep ${xsleep}
+done
+
+# EOF

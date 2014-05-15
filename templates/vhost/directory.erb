@@ -1,0 +1,10 @@
+
+<% if directorymatch -%>
+    <DirectoryMatch "<%= path %>">
+<% else -%>
+    <Directory <%= path %>>
+<% end -%>
+<%  array_directives.each do |line| -%>
+        <%= line %>
+<% end -%>
+    </Directory<% if directorymatch %>Match<% end %>>

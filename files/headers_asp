@@ -1,0 +1,5 @@
+#Managed by puppet. Create using modules/apache/files/headers_asp
+<ifModule mod_headers.c>
+    SetEnvIf X-Forwarded-For "^(\d{1,3}+\.\d{1,3}+\.\d{1,3}+\.\d{1,3}+).*" XFF_CLIENT_IP=$1
+    RequestHeader add X-Forwarded-For %{XFF_CLIENT_IP}e
+</ifModule>
