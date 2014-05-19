@@ -9,10 +9,10 @@ class apache2::logrotate {
     options      => [ 'missingok', 'compress', 'notifempty', 'delaycompress', 'sharedscripts' ],
     archive      => true,
     olddir       => '/var/log/apache2/archives',
-    olddir_owner => 'root',
-    olddir_group => 'super',
-    olddir_mode  => '644',
-    create       => '664 root super',
+    olddir_owner  => $apache2::logrotate_olddir_owner,
+    olddir_group  => $apache2::logrotate_olddir_group,
+    olddir_mode   => $apache2::logrotate_olddir_mode,
+    create        => "${apache2::logrotate_create_mode} ${apache2::logrotate_create_owner} ${apache2::logrotate_create_group}",
     postrotate   => 'if [ -f "`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`" ]; then
                       /etc/init.d/apache2 reload > /dev/null
                       fi';

@@ -25,7 +25,13 @@
 #   include apache2
 #
 class apache2 (
-  $notification_mail = $::notifyemail,
+  $notification_mail      = $::notifyemail,
+  $logrotate_olddir_owner = 'root',
+  $logrotate_olddir_group = 'adm',
+  $logrotate_olddir_mode  = '0750',
+  $logrotate_create_owner = 'root',
+  $logrotate_create_group = 'adm',
+  $logrotate_create_mode  = '0640',
 ) inherits apache2::params {
 
   if $::notifyemail == '' {
