@@ -34,8 +34,8 @@ class apache2 (
   $logrotate_create_mode  = '0640',
 ) inherits apache2::params {
 
-  if $::notifyemail == '' {
-    fail ('you must define $notifyemail global variable')
+  if $notification_mail == '' {
+    fail ('you must define $notification_mail parameter or $::notifyemail global variable')
   }
 
   if ! is_integer($www_port) {
