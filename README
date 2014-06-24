@@ -1,12 +1,24 @@
-NOTE:
 
-Questo modulo richiede che sia definita la zona (variabile "$zone"), quindi il nodo dovra' ereditare 
-una delle zone definite nel file di configurazione principale (/etc/puppet/manifests/site.pp).
+This class install and configure apache2 wbserver.
 
-Per utilizzare la sottoclasse "ispconfiglog", definire nel nodo (o in una sua superclasse) la variabile
-$apache2_isplogformat
-ricordandosi di utilizzare il carattere di escape ("\") per i backslash e per gli apici.
+Actions:
+ This class makes following actions:
 
-Se si utilizza la sottoclasse apache2::drupal, e' necessario definire l'array '$memcachedaemons' per la corretta generazione del file 'php-sessions-memcache' tramite relativo template.
+  - install apache2 webserver
+  - enable modules rewrite, ssl, suexec and include
+  - configure dir module
+  - push the following files under conf.d directory
+    - wars:       get .war files unaccessible from the internet
+    - servername: set ServerName directive with fqdn
+    - security:   security fixes
+  - modify through augeas the ports.conf file setting listen directive
+  - push the analyzing-apache-memory utility
+  - configure logrotate
 
-E' possibile modificare il valore del num. max di file aperti dal processo sovrascrivendo la variabile $apache2_max_open_files.
+Requires:
+  - $www_port: [default 80]
+
+Sample Usage:
+  $www_port = "80"
+  include apache2
+

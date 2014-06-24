@@ -46,7 +46,6 @@ class apache2::config {
   file { "${apache2::params::apache2confd}/servername":
     ensure  => present,
     content => template('apache2/servername'),
-    require => Class['hostname'],
   }
 
   file { $apache2::params::error_log_dir:
