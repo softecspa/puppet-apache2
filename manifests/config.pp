@@ -124,14 +124,17 @@ class apache2::config {
       'set IfModule/arg mod_ssl.c',
       'set IfModule/#comment \'Paolo Larcheri - 20/11/2009 - prevenire vulnerabilita rilevata da PayPal\'',
       'set IfModule/directive[1] SSLProtocol',
-      'set IfModule/directive[1]/arg[1] -ALL',
-      'set IfModule/directive[1]/arg[2] +SSLv3',
-      'set IfModule/directive[1]/arg[3] +TLSv1',
+      'set IfModule/directive[1]/arg[1] ALL',
+      'set IfModule/directive[1]/arg[2] -SSLv2',
+      'set IfModule/directive[1]/arg[3] -SSLv3',
       'set IfModule/directive[2] SSLCipherSuite',
       'set IfModule/directive[2]/arg ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM',
+      'set IfModule/directive[3] SSLHonorCipherOrder',
+      'set IfModule/directive[3]/arg on',
+
     ],
     require => Class['puppet'],
-    notify  => Service['apache2'],
+    notify  => Exec['apache2-graceful'],
   }
 
   exec { 'email-restart-apache':
